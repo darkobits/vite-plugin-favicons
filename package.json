@@ -1,0 +1,27 @@
+{
+  "name": "project-name",
+  "private": true,
+  "version": "0.1.0",
+  "license": "WTFPL",
+  "description": "PROJECT_DESCRIPTION",
+  "author": "AUTHOR_NAME",
+  "engines": {
+    "node": ">=14",
+    "npm": ">=7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "REPOSITORY_URL"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "prepare": "nr prepare",
+    "help": "nr --scripts"
+  },
+  "devDependencies": {
+    "@darkobits/ts": "^0.8.5"
+  }
+}

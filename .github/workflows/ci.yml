@@ -1,0 +1,44 @@
+name: ci
+on:
+  - push
+  - pull_request
+env:
+  FORCE_COLOR: 3
+jobs:
+  ci-cd:
+    name: CI/CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Clone Repository
+        uses: actions/checkout@v2
+        with:
+          # Ensures all tags are fetched so that if any release management tasks
+          # are performed, they will be able to introspect the project's commits
+          # and tags.
+          fetch-depth: 0
+
+      - name: Set Up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          cache: npm
+
+      - name: Install Dependencies
+        run: |
+          npm install --global npm@7
+          npm ci --ignore-scripts
+
+      - name: Build Project
+        run: npx nr build
+
+      - name: Run Unit Tests
+        run: npx nr test.passWithNoTests
+        # run: npx nr test.coverage
+
+      # - name: Upload Coverage Report
+      #   run: bash <(curl -s https://codecov.io/bash)
