@@ -13,9 +13,6 @@ export default function faviconsPlugin(userOpts: FaviconsPluginOptions) {
   const opts = { ...DEFAULT_OPTIONS, ...userOpts };
   let parsedHtml: Array<HtmlTagDescriptor> = [];
 
-  log.info(log.prefix('force'), process.argv.includes('--force'));
-  log.info(log.prefix('cache'), opts.cache);
-
 
   /**
    * Called during the `generateBundle` phase to add assets to the compilation
