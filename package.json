@@ -1,6 +1,6 @@
 {
   "name": "@darkobits/vite-plugin-favicons",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "WTFPL",
   "description": "💅 Generate favicons for your Vite project with caching for blazing fast rebuilds.",
   "author": "darkobits",
