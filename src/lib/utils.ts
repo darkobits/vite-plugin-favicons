@@ -15,7 +15,6 @@ import cache from 'lib/cache';
 import log from 'lib/log';
 
 import type { EmittedFile, FaviconsPluginOptions } from 'etc/types';
-// import type { DeepPartial } from 'ts-essentials';
 import type { HtmlTagDescriptor } from 'vite';
 
 

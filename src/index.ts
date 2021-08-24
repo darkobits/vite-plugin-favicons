@@ -1,6 +1,7 @@
 import { DEFAULT_OPTIONS } from 'etc/constants';
 import log from 'lib/log';
 import { generateFavicons, parseHtml } from 'lib/utils';
+import validate from 'lib/validate-options';
 
 import type { FaviconsPluginOptions } from 'etc/types';
 import type { FaviconResponse } from 'favicons';
@@ -10,7 +11,7 @@ import type { Plugin, HtmlTagDescriptor } from 'vite';
 
 export default function faviconsPlugin(userOpts: FaviconsPluginOptions) {
   const plugin: Plugin = { name: 'favicons-plugin' };
-  const opts = { ...DEFAULT_OPTIONS, ...userOpts };
+  const opts = validate({ ...DEFAULT_OPTIONS, ...userOpts }) as FaviconsPluginOptions;
   let parsedHtml: Array<HtmlTagDescriptor> = [];
 
 

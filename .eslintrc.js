@@ -1,1 +1,3 @@
-module.exports = { extends: 'plugin:@darkobits/ts' };
+module.exports = {
+  extends: 'plugin:@darkobits/ts'
+};
