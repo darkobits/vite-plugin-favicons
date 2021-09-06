@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { DEFAULT_OPTIONS } from 'etc/constants';
 import log from 'lib/log';
 import { generateFavicons, parseHtml } from 'lib/utils';
@@ -28,7 +30,7 @@ export default function faviconsPlugin(userOpts: FaviconsPluginOptions) {
     const emittedFiles = [...files, ...images].map(file => {
       const id = ctx.emitFile({
         type: 'asset',
-        name: file.name,
+        name: path.join(opts.path ?? '', file.name),
         source: file.contents
       });
 
