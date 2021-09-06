@@ -1,5 +1,6 @@
 import path from 'path';
 
+import stringify from 'fast-json-stable-stringify';
 import originalFavicons, {
   FaviconOptions,
   FaviconResponse,
@@ -14,7 +15,7 @@ import { DEFAULT_ICON_OPTIONS } from 'etc/constants';
 import cache from 'lib/cache';
 import log from 'lib/log';
 
-import type { EmittedFile, FaviconsPluginOptions } from 'etc/types';
+import type { EmittedFile, FaviconsPluginOptions, JobConfig } from 'etc/types';
 import type { HtmlTagDescriptor } from 'vite';
 
 
@@ -33,8 +34,25 @@ function mapOptsToJobs(opts: FaviconsPluginOptions) {
     // icon type.
     const icons = { ...DEFAULT_ICON_OPTIONS, [iconType]: iconOptions };
     const config: Partial<FaviconOptions> = { ...opts, icons };
-    return { source, iconType, config };
+    return { source, iconType, config } as JobConfig;
   });
+}
+
+
+/**
+ * @private
+ *
+ * Provided a JobConfig object, returns a cache key computed using any
+ * configuration options for the job and a hash of the source file's contents.
+ */
+async function generateCacheKeyForJob(jobConfig: JobConfig) {
+  // Generate a cache key for the current icon any its configuration, but modify
+  // the 'source' property of the job configuration to contain a hash of the
+  // source file's contents rather than its name.
+  return cache.computeKey(stringify({
+    ...jobConfig,
+    source: await fs.readFile(jobConfig.source)
+  }));
 }
 
 
@@ -94,7 +112,7 @@ async function favicons(source: string, options: FaviconOptions) {
  * Buffers, we have to manually separate binary data from the rest of the
  * response.
  */
-async function cacheResponse(iconType: string, sourcePath: string, response: FaviconResponse, label?: string) {
+async function cacheResponse(cacheKey: string, response: FaviconResponse, label?: string) {
   const serializableResponse = {
     images: [] as Array<Omit<FaviconImage, 'contents'>>,
     files: [] as Array<Omit<FaviconFile, 'contents'>>,
@@ -105,7 +123,7 @@ async function cacheResponse(iconType: string, sourcePath: string, response: Fav
   // the new response.
   const imagesPromise = Promise.all(response.images.map(async image => {
     const { contents, ...meta } = image;
-    const key = `images/${meta.name}`;
+    const key = `${cacheKey}/images/${meta.name}`;
     serializableResponse.images.push(meta);
     log.verbose(label && log.prefix(label), `Caching ${log.chalk.green(meta.name)}.`);
     await cache.put(key, contents, { logLabel: meta.name });
@@ -115,7 +133,7 @@ async function cacheResponse(iconType: string, sourcePath: string, response: Fav
   // the new response.
   const filesPromise = Promise.all(response.files.map(async file => {
     const { contents, ...meta } = file;
-    const key = `files/${meta.name}`;
+    const key = `${cacheKey}/files/${meta.name}`;
     serializableResponse.files.push(meta);
     log.verbose(label && log.prefix(label), `Caching ${log.chalk.green(meta.name)}.`);
     await cache.put(key, contents, { logLabel: meta.name });
@@ -128,10 +146,7 @@ async function cacheResponse(iconType: string, sourcePath: string, response: Fav
 
   // Serialize response and write it to cache.
   const serializedResponse = JSON.stringify(serializableResponse);
-
-  const cacheKey = `${iconType}:${cache.computeKey(await fs.readFile(sourcePath))}`;
   const responsePromise = cache.put(cacheKey, serializedResponse, { logLabel: label });
-
   await Promise.all([filesPromise, imagesPromise, responsePromise]);
 }
 
@@ -145,8 +160,7 @@ async function cacheResponse(iconType: string, sourcePath: string, response: Fav
  * Note: Because `cacache` only allows for the serialization of strings and
  * Buffers, we have to manually merge binary data into a single response.
  */
-async function getCachedResponse(iconType: string, sourcePath: string, label?: string) {
-  const cacheKey = `${iconType}:${cache.computeKey(await fs.readFile(sourcePath))}`;
+async function getCachedResponse(cacheKey: string, label?: string) {
   const serializedResponse = await cache.get(cacheKey, { logLabel: label });
   if (!serializedResponse) return;
 
@@ -154,7 +168,7 @@ async function getCachedResponse(iconType: string, sourcePath: string, label?: s
 
   // Read all images from cache.
   const imagesPromise = Promise.all(response.images.map(async image => {
-    const key = `images/${image.name}`;
+    const key = `${cacheKey}/images/${image.name}`;
     const contents = await cache.get(key, { logLabel: image.name });
 
     if (!contents) {
@@ -166,7 +180,7 @@ async function getCachedResponse(iconType: string, sourcePath: string, label?: s
 
   // Read all files from cache.
   const filesPromise = Promise.all(response.files.map(async file => {
-    const key = `files/${file.name}`;
+    const key = `${cacheKey}/files/${file.name}`;
     const contents = await cache.get(key, { logLabel: file.name });
 
     if (!contents) {
@@ -194,12 +208,18 @@ export async function generateFavicons(opts: FaviconsPluginOptions) {
   // incoming configuration into a list of jobs we will need to run.
   const jobConfigs = mapOptsToJobs(opts);
 
-  const jobs = jobConfigs.map(async ({ source, iconType, config }) => {
+  const jobs = jobConfigs.map(async jobConfig => {
+    const { source, iconType, config } = jobConfig;
+    // N.B. Favicons modifies the `config` object in-place, so we need to
+    // generate a key now to ensure that our cache get/put functions use the
+    // same one.
+    const cacheKeyForJob = await generateCacheKeyForJob(jobConfig);
+
     const sourceFileName = path.basename(source);
 
     if (opts.cache) {
       // If we have a cached response for this source asset, return it.
-      const cachedResponse = await getCachedResponse(iconType, source, iconType);
+      const cachedResponse = await getCachedResponse(cacheKeyForJob, iconType);
 
       if (cachedResponse) {
         log.verbose(`Using cached ${log.chalk.bold(iconType)} assets from source ${log.chalk.green(sourceFileName)}.`);
@@ -211,7 +231,7 @@ export async function generateFavicons(opts: FaviconsPluginOptions) {
 
     if (opts.cache) {
       // Return the response immediately without awaiting the cache write.
-      void cacheResponse(iconType, source, response, iconType).then(() => {
+      void cacheResponse(cacheKeyForJob, response, iconType).then(() => {
         log.verbose(`Cached rendered ${log.chalk.bold(iconType)} assets from source ${log.chalk.green(sourceFileName)}.`);
       });
     }
@@ -243,13 +263,23 @@ export function parseHtml(emittedFiles: Array<EmittedFile>, fragments: Array<str
       const mappedAttrs = (childNode as Element).attrs.map(attr => {
         // If the attribute is of type "href"
         if (attr.name === 'href') {
-          // Remove any leading / from the href so it will exactly match
-          // the original names of emitted files.
-          const href = attr.value.replace(/^\//, '');
-
           // Locate the file descriptor for this element by matching our
-          // href to the file's original name.
-          const correspondingFile = emittedFiles.find(file => file.name === href);
+          // href to the file's resolved name.
+          const correspondingFile = emittedFiles.find(file => {
+            // Extract the name (sans extension) generated by `favicons`. For
+            // example: 'apple-touch-startup-image-2436x1125'.
+            const faviconsFileName = path.parse(file.name).name;
+
+            // Extract the name (sans extension) generated by Vite. For example:
+            // 'apple-touch-startup-image-2436x1125-b1718e2a'.
+            const viteFileName = path.parse(file.resolvedName).name;
+
+            // If the `favicons` file name is included in the Vite file name, we
+            // can assume we have found a match. This may break if the user
+            // configures some exotic `assetFileNames` option that does not use
+            // the '[name]' token.
+            return viteFileName.includes(faviconsFileName);
+          });
 
           // Finally, update the href attribute from the original file name
           // to the resolved file name.

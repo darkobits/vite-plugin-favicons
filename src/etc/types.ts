@@ -65,8 +65,8 @@ export interface EmittedFile {
 }
 
 
-export type WidenLiterals<T> =
-  T extends boolean ? boolean :
-  T extends string ? string :
-  T extends number ? number :
-  T;
+export interface JobConfig {
+  source: string;
+  iconType: keyof FaviconOptions['icons'];
+  config: FaviconOptions['icons'][this['iconType']];
+}
