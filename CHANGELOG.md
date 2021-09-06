@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.2...v0.1.3) (2021-09-06)
+
+
+### 🐞 Bug Fixes
+
+* Cache assets based on configuration. ([2d4930c](https://github.com/darkobits/vite-plugin-favicons/commit/2d4930cd7db4716fba7cbabb4ec79b11891ff9dc)), closes [#2](https://github.com/darkobits/vite-plugin-favicons/issues/2)
+* Use 'path' option when generating file names. ([3dcd173](https://github.com/darkobits/vite-plugin-favicons/commit/3dcd173d3dccf87b344ee817bdb0904efeef7000)), closes [#3](https://github.com/darkobits/vite-plugin-favicons/issues/3)
+
 ### [0.1.2](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.1...v0.1.2) (2021-08-24)
 
 
