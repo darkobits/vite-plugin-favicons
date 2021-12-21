@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.3...v0.1.4) (2021-12-21)
+
+
+### 🏗 Chores
+
+* **deps:** Update dependencies. ([278bcbf](https://github.com/darkobits/vite-plugin-favicons/commit/278bcbf440bec8bf20bf5d01caef1d8ad1e6a199))
+
+
+### 🛠 Refactoring
+
+* Process emitted images and files separately. ([6a65e19](https://github.com/darkobits/vite-plugin-favicons/commit/6a65e196a402d1c035aae7d11c09820ff56eb033))
+
 ### [0.1.3](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.2...v0.1.3) (2021-09-06)
 
 

@@ -2,6 +2,7 @@ import createValidator from '@darkobits/valida';
 
 import type { FaviconsPluginOptions } from 'etc/types';
 
+
 export default createValidator<FaviconsPluginOptions>(({ ow }) => ({
   spec: {
     inject: ow.optional.boolean,

@@ -3,6 +3,8 @@
   "include": ["src"],
   "compilerOptions": {
     "baseUrl": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    // Enabled while Vite fixes their typings for TS 4.5.
+    "skipLibCheck": true
   }
 }
