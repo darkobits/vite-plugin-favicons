@@ -70,3 +70,34 @@ export interface JobConfig {
   iconType: keyof FaviconOptions['icons'];
   config: FaviconOptions['icons'][this['iconType']];
 }
+
+
+export interface AndroidManifest {
+  name: string;
+  short_name: string;
+  description: string;
+  dir: string;
+  lang: string;
+  display: string;
+  orientation: string;
+  start_url: string;
+  background_color: string;
+  theme_color: string;
+  icons: Array<{
+    src: string;
+    sizes: string;
+    type: string;
+  }>;
+}
+
+
+export interface FirefoxManifest {
+  version: string;
+  name: string;
+  description: string;
+  icons: Record<string, string>;
+  developer: {
+    name: string;
+    url: string;
+  };
+}

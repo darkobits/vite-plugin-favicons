@@ -54,9 +54,9 @@ async function get(key: SsriData, { logLabel }: CacheOptions) {
     }
 
     return cachedData;
-  } catch (err) {
+  } catch (err: any) {
     if (logLabel) {
-      if (String(err.message).includes('No cache entry')) {
+      if (String(err?.message).includes('No cache entry')) {
         log.silly(log.prefix(fullLogLabel), log.chalk.yellow('Cache miss.'));
       } else {
         log.error(log.prefix(fullLogLabel), err);
