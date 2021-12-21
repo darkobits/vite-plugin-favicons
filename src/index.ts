@@ -90,7 +90,7 @@ export default function faviconsPlugin(userOpts: FaviconsPluginOptions) {
 
   plugin.configResolved = (config: ResolvedConfig) => {
     base = config.base;
-  }
+  };
 
   return plugin;
 }
