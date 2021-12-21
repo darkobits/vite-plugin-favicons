@@ -283,7 +283,7 @@ export async function generateFavicons(opts: FaviconsPluginOptions) {
  *
  * See: https://vitejs.dev/guide/api-plugin.html#transformindexhtml
  */
-export function parseHtml(emittedFiles: Array<EmittedFile>, fragments: Array<string>) {
+export function parseHtml(emittedFiles: Array<EmittedFile>, fragments: Array<string>, base = '/') {
   return fragments.flatMap(fragment => {
     const parsedFragment = parseFragment(fragment);
 
@@ -299,8 +299,9 @@ export function parseHtml(emittedFiles: Array<EmittedFile>, fragments: Array<str
 
           // Finally, update the href attribute from the original file name
           // to the resolved file name.
+          // we should respect base options defined in vite.config
           if (correspondingFile) {
-            attr.value = `/${correspondingFile.resolvedName}`;
+            attr.value = `${base}${correspondingFile.resolvedName}`;
           } else {
             throw new Error(`Unable to find a corresponding file for href: ${attr.value}`);
           }
