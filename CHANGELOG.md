@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.4...v0.1.5) (2021-12-21)
+
+
+### 🐞 Bug Fixes
+
+* Respect `options.base` in Vite config. ([#4](https://github.com/darkobits/vite-plugin-favicons/issues/4)) ([1c8a561](https://github.com/darkobits/vite-plugin-favicons/commit/1c8a561f4494a282f1f59f4087c16d34f24a35e9))
+
 ### [0.1.4](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.3...v0.1.4) (2021-12-21)
 
 
