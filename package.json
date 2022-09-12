@@ -32,24 +32,25 @@
   },
   "dependencies": {
     "@darkobits/log": "^2.0.0-beta.16",
-    "@darkobits/valida": "^0.1.4",
+    "@darkobits/valida": "^0.1.6",
     "@types/favicons": "^6.2.2",
-    "cacache": "^15.3.0",
+    "cacache": "^16.1.3",
     "fast-json-stable-stringify": "^2.1.0",
     "favicons": "^6.2.2",
     "find-cache-dir": "^3.3.2",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.1.0",
     "parse5": "^6.0.1",
-    "ssri": "^8.0.1",
-    "ts-essentials": "^9.0.0"
+    "ssri": "^9.0.1",
+    "ts-essentials": "^9.3.0"
   },
   "devDependencies": {
-    "@darkobits/ts": "^0.8.9",
+    "@darkobits/eslint-plugin": "^0.2.9",
+    "@darkobits/ts": "^0.12.4",
     "@types/cacache": "^15.0.1",
     "@types/find-cache-dir": "^3.2.1",
     "@types/fs-extra": "^9.0.13",
     "@types/parse5": "^6.0.3",
     "@types/ssri": "^7.1.1",
-    "rollup": "^2.61.1"
+    "rollup": "^2.79.0"
   }
 }

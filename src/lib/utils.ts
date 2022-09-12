@@ -170,7 +170,7 @@ async function getCachedResponse(cacheKey: string, label?: string) {
   const serializedResponse = await cache.get(cacheKey, { logLabel: label ?? '' });
   if (!serializedResponse) return;
 
-  const response: FaviconResponse = JSON.parse(serializedResponse.toString('utf-8'));
+  const response: FaviconResponse = JSON.parse(serializedResponse.toString('utf8'));
 
   // Read all images from cache.
   const imagesPromise = Promise.all(response.images.map(async image => {
@@ -193,7 +193,7 @@ async function getCachedResponse(cacheKey: string, label?: string) {
       throw new Error(`Expected cached contents for "${key}"`);
     }
 
-    return { ...file, contents: contents.toString('utf-8') };
+    return { ...file, contents: contents.toString('utf8') };
   }));
 
   // Wait for all assets to be read from cache.
