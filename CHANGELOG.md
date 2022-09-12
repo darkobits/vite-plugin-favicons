@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.8](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.7...v0.1.8) (2022-09-12)
+
+
+### 📖 Documentation
+
+* Update README. ([f609ae2](https://github.com/darkobits/vite-plugin-favicons/commit/f609ae2b8cd8fe9babd5edfd83968a220b0c9c36))
+
+
+### 🏗 Chores
+
+* **deps:** Update dependencies. ([c69103a](https://github.com/darkobits/vite-plugin-favicons/commit/c69103a732e45cc142bbc50b13f37a65c1c9ec18))
+* Update CI configuration. ([408b473](https://github.com/darkobits/vite-plugin-favicons/commit/408b473751382ec104f9ce3d48ab7b1122d2a8ed))
+
 ### [0.1.7](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.6...v0.1.7) (2022-07-27)
 
 
