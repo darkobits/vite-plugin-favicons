@@ -9,7 +9,8 @@ import originalFavicons, {
   FaviconHtmlElement
 } from 'favicons';
 import fs from 'fs-extra';
-import { parseFragment, Element } from 'parse5';
+import { parseFragment } from 'parse5';
+
 
 import { DEFAULT_ICON_OPTIONS } from 'etc/constants';
 import cache from 'lib/cache';
@@ -22,6 +23,7 @@ import type {
   FirefoxManifest,
   JobConfig
 } from 'etc/types';
+import type { Element } from 'parse5/dist/tree-adapters/default';
 import type { HtmlTagDescriptor } from 'vite';
 
 

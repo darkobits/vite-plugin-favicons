@@ -4,20 +4,11 @@
   "license": "WTFPL",
   "description": "💅 Generate favicons for your Vite project with caching for blazing fast rebuilds.",
   "author": "darkobits",
+  "type": "module",
   "engines": {
     "node": ">=14",
     "npm": ">=7"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/darkobits/vite-plugin-favicons.git"
-  },
-  "keywords": [
-    "vite-plugin",
-    "favicons",
-    "favicon",
-    "pwa"
-  ],
   "files": [
     "dist"
   ],
@@ -39,7 +30,7 @@
     "favicons": "^6.2.2",
     "find-cache-dir": "^3.3.2",
     "fs-extra": "^10.1.0",
-    "parse5": "^6.0.1",
+    "parse5": "^7.1.1",
     "ssri": "^9.0.1",
     "ts-essentials": "^9.3.0"
   },
@@ -49,8 +40,17 @@
     "@types/cacache": "^15.0.1",
     "@types/find-cache-dir": "^3.2.1",
     "@types/fs-extra": "^9.0.13",
-    "@types/parse5": "^6.0.3",
     "@types/ssri": "^7.1.1",
     "rollup": "^2.79.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darkobits/vite-plugin-favicons.git"
+  },
+  "keywords": [
+    "vite-plugin",
+    "favicons",
+    "favicon",
+    "pwa"
+  ]
 }
