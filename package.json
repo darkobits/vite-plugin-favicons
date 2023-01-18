@@ -6,9 +6,21 @@
   "author": "darkobits",
   "type": "module",
   "engines": {
-    "node": ">=14",
-    "npm": ">=7"
+    "node": ">=16",
+    "npm": ">=8"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darkobits/vite-plugin-favicons.git"
+  },
+  "keywords": [
+    "favicon",
+    "favicons",
+    "plugin",
+    "pwa",
+    "vite-plugin",
+    "vite"
+  ],
   "files": [
     "dist"
   ],
@@ -19,38 +31,28 @@
     "help": "nr --scripts"
   },
   "peerDependencies": {
-    "vite": "^2.7.0 || ^3.0.0"
+    "vite": "^4.0.4"
   },
   "dependencies": {
     "@darkobits/log": "^2.0.0-beta.16",
     "@darkobits/valida": "^0.1.6",
     "@types/favicons": "^6.2.2",
-    "cacache": "^16.1.3",
+    "cacache": "^17.0.4",
     "fast-json-stable-stringify": "^2.1.0",
     "favicons": "^7.0.2",
-    "find-cache-dir": "^3.3.2",
-    "fs-extra": "^10.1.0",
-    "parse5": "^7.1.1",
-    "ssri": "^9.0.1",
+    "find-cache-dir": "^4.0.0",
+    "fs-extra": "^11.1.0",
+    "parse5": "^7.1.2",
+    "ssri": "^10.0.1",
     "ts-essentials": "^9.3.0"
   },
   "devDependencies": {
     "@darkobits/eslint-plugin": "^0.2.9",
-    "@darkobits/ts": "^0.12.4",
+    "@darkobits/ts": "~0.13.0",
     "@types/cacache": "^15.0.1",
     "@types/find-cache-dir": "^3.2.1",
-    "@types/fs-extra": "^9.0.13",
+    "@types/fs-extra": "^11.0.1",
     "@types/ssri": "^7.1.1",
-    "rollup": "^2.79.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/darkobits/vite-plugin-favicons.git"
-  },
-  "keywords": [
-    "vite-plugin",
-    "favicons",
-    "favicon",
-    "pwa"
-  ]
+    "rollup": "^3.10.0"
+  }
 }
