@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-beta.0](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.8...v0.2.0-beta.0) (2023-01-18)
+
+
+### 🛠 Refactoring
+
+* Update to `favicons` 7.0.0. ([fd5bf0f](https://github.com/darkobits/vite-plugin-favicons/commit/fd5bf0f8f668183654124d096ce88c59281fe0c5))
+
+
+### 🏗 Chores
+
+* **deps:** Update dependencies. ([357f55b](https://github.com/darkobits/vite-plugin-favicons/commit/357f55bb0810ebc6fe96cd129b7b1a8c1422aac8))
+* **deps:** Update to `parse5@7`. ([de38373](https://github.com/darkobits/vite-plugin-favicons/commit/de383734430468e064ebc6f291f4133b30740710))
+* Publish as ESM. ([cd0b9c3](https://github.com/darkobits/vite-plugin-favicons/commit/cd0b9c36182611ee7a0f0be531e09ac73bf12998))
+
 ## [0.1.8](https://github.com/darkobits/vite-plugin-favicons/compare/v0.1.7...v0.1.8) (2022-09-12)
 
 
