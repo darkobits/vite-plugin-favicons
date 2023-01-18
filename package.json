@@ -27,7 +27,7 @@
     "@types/favicons": "^6.2.2",
     "cacache": "^16.1.3",
     "fast-json-stable-stringify": "^2.1.0",
-    "favicons": "^6.2.2",
+    "favicons": "^7.0.2",
     "find-cache-dir": "^3.3.2",
     "fs-extra": "^10.1.0",
     "parse5": "^7.1.1",
