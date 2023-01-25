@@ -1,7 +1,7 @@
 <img src="https://user-images.githubusercontent.com/441546/130305921-f51271e5-d6b8-4918-87ff-035cfd755ce7.png" style="max-width: 100%" />
 <p align="center">
   <a href="https://www.npmjs.com/package/@darkobits/vite-plugin-favicons"><img src="https://img.shields.io/npm/v/@darkobits/vite-plugin-favicons.svg?style=flat-square&color=398AFB"></a>
-  <a href="https://github.com/darkobits/vite-plugin-favicons/actions?query=workflow%3Aci"><img src="https://img.shields.io/github/workflow/status/darkobits/vite-plugin-favicons/ci/master?style=flat-square"></a>
+  <a href="https://github.com/darkobits/vite-plugin-favicons/actions?query=workflow%3Aci"><img src="https://img.shields.io/github/actions/workflow/status/darkobits/vite-plugin-favicons/ci.yml?style=flat-square"></a>
   <a href="https://depfu.com/github/darkobits/vite-plugin-favicons"><img src="https://img.shields.io/depfu/darkobits/vite-plugin-favicons?style=flat-square"></a>
   <a href="https://conventionalcommits.org"><img src="https://img.shields.io/static/v1?label=commits&message=conventional&style=flat-square&color=398AFB"></a>
 </p>
