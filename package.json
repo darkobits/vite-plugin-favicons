@@ -39,7 +39,7 @@
     "cacache": "^17.0.4",
     "fast-json-stable-stringify": "^2.1.0",
     "favicons": "^7.0.2",
-    "find-cache-dir": "^4.0.0",
+    "find-cache-dir": "~3.3.2",
     "fs-extra": "^11.1.0",
     "parse5": "^7.1.2",
     "ssri": "^10.0.1",
