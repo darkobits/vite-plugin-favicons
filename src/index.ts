@@ -8,11 +8,10 @@ import validate from 'lib/validate-options';
 import type { EmittedViteFile, FaviconsPluginOptions } from 'etc/types';
 import type { FaviconResponse } from 'favicons';
 import type { PluginContext } from 'rollup';
-// import type { Writable } from 'ts-essentials';
 import type { Plugin, HtmlTagDescriptor, ResolvedConfig } from 'vite';
 
 
-export default function faviconsPlugin(userOpts: FaviconsPluginOptions) {
+export function faviconsPlugin(userOpts: FaviconsPluginOptions) {
   const plugin: Plugin = { name: 'favicons-plugin' };
   const opts = validate({ ...DEFAULT_OPTIONS, ...userOpts });
   let parsedHtml: Array<HtmlTagDescriptor> = [];

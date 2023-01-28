@@ -29,7 +29,7 @@ configure [`favicons`](https://github.com/itgalaxy/favicons), with the following
 
 ```js
 import { defineConfig } from 'vite';
-import faviconsPlugin from '@darkobits/vite-plugin-favicons';
+import { faviconsPlugin } from '@darkobits/vite-plugin-favicons';
 
 export default defineConfig(() => ({
   plugins: [
