@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/darkobits/vite-plugin-favicons/compare/v0.2.0...v0.3.0) (2023-01-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* - This package now uses a named export.
+
+### 🏗 Chores
+
+* Remove deprecated type defs. ([6c1b561](https://github.com/darkobits/vite-plugin-favicons/commit/6c1b561dbb160ebfae516e7ae223d14f9ec43dfe))
+
+
+### 📖 Documentation
+
+* Update README. ([87a7ade](https://github.com/darkobits/vite-plugin-favicons/commit/87a7aded8da2320ad450503801c7deda7314314a))
+
+
+### 🛠 Refactoring
+
+* Use named export for `faviconsPlugin`. ([ee57d4f](https://github.com/darkobits/vite-plugin-favicons/commit/ee57d4fed47f937d2997d9b946dfe91d509a6395))
+
 ## [0.2.0](https://github.com/darkobits/vite-plugin-favicons/compare/v0.2.0-beta.2...v0.2.0) (2023-01-25)
 
 ## [0.2.0-beta.2](https://github.com/darkobits/vite-plugin-favicons/compare/v0.2.0-beta.1...v0.2.0-beta.2) (2023-01-25)
