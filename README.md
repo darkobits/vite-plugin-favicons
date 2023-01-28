@@ -53,8 +53,7 @@ export default defineConfig(() => ({
 
       /**
        * Specify each icon type to render. Unlike `favicons`, this plugin is
-       * opt-in, meaning only the icon types you declare here will be
-       * rendered.
+       * opt-in, meaning only the icon types you declare here will be rendered.
        *
        * For each icon type, all `favicons` options are supported. An
        * additional `source` property is required to indicate the asset to be
