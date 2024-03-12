@@ -53,9 +53,6 @@ export default createValidator<FaviconsPluginOptions>(({ ow }) => ({
       appleStartup: ow.optional.object.partialShape({
         source: ow.string
       }),
-      firefox: ow.optional.object.partialShape({
-        source: ow.string
-      }),
       yandex: ow.optional.object.partialShape({
         source: ow.string
       }),

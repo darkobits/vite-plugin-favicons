@@ -4,6 +4,7 @@
   "license": "WTFPL",
   "description": "💅 Generate favicons for your Vite project with caching for blazing fast rebuilds.",
   "author": "darkobits",
+  "type": "module",
   "engines": {
     "node": ">=16",
     "npm": ">=8"
@@ -30,27 +31,27 @@
     "help": "nr --scripts"
   },
   "peerDependencies": {
-    "vite": "^4.0.4"
+    "vite": "^5.1.6"
   },
   "dependencies": {
     "@darkobits/log": "^2.0.0-beta.16",
     "@darkobits/valida": "^0.1.6",
-    "cacache": "^17.0.4",
+    "cacache": "^18.0.2",
     "fast-json-stable-stringify": "^2.1.0",
-    "favicons": "^7.0.2",
-    "find-cache-dir": "~3.3.2",
-    "fs-extra": "^11.1.0",
+    "favicons": "^7.1.5",
+    "find-cache-dir": "~5.0.0",
+    "fs-extra": "^11.2.0",
     "parse5": "^7.1.2",
-    "ssri": "^10.0.1",
-    "ts-essentials": "^9.3.0"
+    "ssri": "^10.0.5",
+    "ts-essentials": "^9.4.1"
   },
   "devDependencies": {
-    "@darkobits/eslint-plugin": "^0.2.10",
-    "@darkobits/ts": "~0.13.7",
-    "@types/cacache": "^15.0.1",
+    "@darkobits/eslint-plugin": "^0.5.5",
+    "@darkobits/ts": "~0.20.7",
+    "@types/cacache": "^17.0.2",
     "@types/find-cache-dir": "^3.2.1",
-    "@types/fs-extra": "^11.0.1",
-    "@types/ssri": "^7.1.1",
-    "rollup": "^3.10.1"
+    "@types/fs-extra": "^11.0.4",
+    "@types/ssri": "^7.1.5",
+    "rollup": "^4.12.1"
   }
 }

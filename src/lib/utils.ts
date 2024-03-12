@@ -16,13 +16,13 @@ import cache from 'lib/cache';
 import log from 'lib/log';
 
 import type {
+  Attribute,
   AndroidManifest,
   EmittedViteFile,
   FaviconsPluginOptions,
   FirefoxManifest,
   JobConfig
 } from 'etc/types';
-import type { Element } from 'parse5/dist/tree-adapters/default';
 import type { DeepPartial } from 'ts-essentials';
 import type { HtmlTagDescriptor } from 'vite';
 
@@ -265,9 +265,13 @@ export function parseHtml(emittedFiles: Array<EmittedViteFile>, fragments: Array
     const parsedFragment = parseFragment(fragment);
 
     // Map over each child node in the fragment
-    return parsedFragment.childNodes.map(childNode => {
+    return parsedFragment.childNodes.filter(childNode => {
+      // Remove nodes that are not of type `Element` by using duck typing to
+      // to check for the `attrs` property.
+      return Reflect.has(childNode, 'attrs');
+    }).map(childNode => {
       // Then map over each of its attributes
-      const mappedAttrs = (childNode as Element).attrs.map(attr => {
+      const mappedAttrs = (childNode as any).attrs.map((attr: Attribute) => {
         // If the attribute is of type "href"
         if (attr.name === 'href') {
           // Locate the file descriptor for this element by matching our

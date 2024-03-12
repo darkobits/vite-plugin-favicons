@@ -19,7 +19,6 @@ export const DEFAULT_ICON_OPTIONS = {
   appleStartup: false,
   coast: false,
   favicons: false,
-  firefox: false,
   windows: false,
   yandex: false
 };

@@ -115,3 +115,18 @@ export interface FirefoxManifest {
     url: string;
   };
 }
+
+
+/**
+ * Copied from parse5 because they don't include it in their ESM export map.
+ */
+export interface Attribute {
+  /** The name of the attribute. */
+  name: string;
+  /** The namespace of the attribute. */
+  namespace?: string;
+  /** The namespace-related prefix of the attribute. */
+  prefix?: string;
+  /** The value of the attribute. */
+  value: string;
+}
