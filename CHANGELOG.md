@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.2](https://github.com/darkobits/vite-plugin-favicons/compare/v0.3.1...v0.3.2) (2024-03-12)
+
+
+### 🏗 Chores
+
+* Relax Vite version range. ([fa4ff41](https://github.com/darkobits/vite-plugin-favicons/commit/fa4ff414f119a8b0413ac73d692d053959a9d8c6))
+* Update `ci.yml`. ([d4728b9](https://github.com/darkobits/vite-plugin-favicons/commit/d4728b91e9af41b6acad123766079f19cf5d6858))
+* Update LICENSE. ([9bb52ce](https://github.com/darkobits/vite-plugin-favicons/commit/9bb52cee9ffbeca02fea1949ee13809672153f14))
+
+
+### 📖 Documentation
+
+* Update README. ([e86c0b2](https://github.com/darkobits/vite-plugin-favicons/commit/e86c0b29279e62f9e39b14b19dd185343ec10d64))
+
 ## [0.3.1](https://github.com/darkobits/vite-plugin-favicons/compare/v0.3.0...v0.3.1) (2024-03-12)
 
 
