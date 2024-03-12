@@ -31,7 +31,7 @@
     "help": "nr --scripts"
   },
   "peerDependencies": {
-    "vite": "^5.1.6"
+    "vite": "^4.0.0 || ^5.0.0"
   },
   "dependencies": {
     "@darkobits/log": "^2.0.0-beta.16",
