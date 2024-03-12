@@ -1,12 +1,43 @@
-<img src="https://user-images.githubusercontent.com/441546/130305921-f51271e5-d6b8-4918-87ff-035cfd755ce7.png" style="max-width: 100%" />
 <p align="center">
-  <a href="https://www.npmjs.com/package/@darkobits/vite-plugin-favicons"><img src="https://img.shields.io/npm/v/@darkobits/vite-plugin-favicons.svg?style=flat-square&color=398AFB"></a>
-  <a href="https://github.com/darkobits/vite-plugin-favicons/actions?query=workflow%3Aci"><img src="https://img.shields.io/github/actions/workflow/status/darkobits/vite-plugin-favicons/ci.yml?style=flat-square"></a>
-  <a href="https://depfu.com/github/darkobits/vite-plugin-favicons"><img src="https://img.shields.io/depfu/darkobits/vite-plugin-favicons?style=flat-square"></a>
-  <a href="https://conventionalcommits.org"><img src="https://img.shields.io/static/v1?label=commits&message=conventional&style=flat-square&color=398AFB"></a>
+  <picture>
+    <source
+      media="(prefers-color-scheme: dark)"
+      srcset="https://github.com/darkobits/vite-plugin-favicons/assets/441546/aa64a1ee-75bf-4837-9c03-038bc2651f66"
+      width="100%"
+    >
+    <img
+      src="https://github.com/darkobits/vite-plugin-favicons/assets/441546/1f4635ba-bc51-4903-8649-5e3a6c97d65d"
+      width="100%"
+    >
+  </picture>
 </p>
-
-<br />
+<p align="center">
+  <a
+    href="https://www.npmjs.com/package/@darkobits/vite-plugin-favicons"
+  ><img
+    src="https://img.shields.io/npm/v/@darkobits/vite-plugin-favicons.svg?style=flat-square"
+  ></a>
+  <a
+    href="https://github.com/darkobits/vite-plugin-favicons/actions?query=workflow%3Aci"
+  ><img
+    src="https://img.shields.io/github/actions/workflow/status/darkobits/vite-plugin-favicons/ci.yml?style=flat-square"
+  ></a>
+  <a
+    href="https://depfu.com/repos/github/darkobits/vite-plugin-favicons"
+  ><img
+    src="https://img.shields.io/depfu/darkobits/vite-plugin-favicons?style=flat-square"
+  ></a>
+  <a
+    href="https://conventionalcommits.org"
+  ><img
+    src="https://img.shields.io/static/v1?label=commits&message=conventional&style=flat-square&color=398AFB"
+  ></a>
+  <a
+    href="https://firstdonoharm.dev"
+  ><img
+    src="https://img.shields.io/static/v1?label=license&message=hippocratic&style=flat-square&color=753065"
+  ></a>
+</p>
 
 Yet another favicons plugin. 🤷
 
