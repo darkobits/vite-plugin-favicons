@@ -1,7 +1,6 @@
-import createValidator from '@darkobits/valida';
+import createValidator from '@darkobits/valida'
 
-import type { FaviconsPluginOptions } from 'etc/types';
-
+import type { FaviconsPluginOptions } from 'etc/types'
 
 export default createValidator<FaviconsPluginOptions>(({ ow }) => ({
   spec: {
@@ -64,4 +63,4 @@ export default createValidator<FaviconsPluginOptions>(({ ow }) => ({
       })
     })
   }
-}));
+}))

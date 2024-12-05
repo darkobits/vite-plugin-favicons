@@ -1,1 +1,1 @@
-export { defaultPackageScripts as default } from '@darkobits/ts';
+export { defaultPackageScripts as default } from '@darkobits/ts'

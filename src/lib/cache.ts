@@ -1,32 +1,27 @@
-import cache from 'cacache';
-import findCacheDir from 'find-cache-dir';
-import ssri from 'ssri';
+import cache from 'cacache'
+import findCacheDir from 'find-cache-dir'
+import ssri from 'ssri'
 
-import log from 'lib/log';
-
+import log from 'lib/log'
 
 export type SsriData = string | Buffer | NodeJS.TypedArray | DataView;
 
-
 export interface CacheOptions {
-  logLabel?: string;
+  logLabel?: string
 }
-
 
 /**
  * Cache subdirectory in node_modules/.cache.
  */
-const cachePath = findCacheDir({ name: '@darkobits/vite-plugin-favicons' });
-
+const cachePath = findCacheDir({ name: '@darkobits/vite-plugin-favicons' })
 
 /**
  * Returns the SHA-256 hash of the provided value.
  */
 function computeKey(data: SsriData) {
-  const integrity = ssri.fromData(data);
-  return integrity.toString();
+  const integrity = ssri.fromData(data)
+  return integrity.toString()
 }
-
 
 /**
  * Intended use: pass in raw file contents as key.
@@ -35,38 +30,37 @@ function computeKey(data: SsriData) {
  */
 async function get(key: SsriData, { logLabel }: CacheOptions) {
   if (!cachePath) {
-    throw new Error('Unable to find a suitable cache directory.');
+    throw new Error('Unable to find a suitable cache directory.')
   }
 
-  const hashKey = computeKey(key);
-  const fullLogLabel = `cache:get${logLabel ? `:${logLabel}` : ''}`;
+  const hashKey = computeKey(key)
+  const fullLogLabel = `cache:get${logLabel ? `:${logLabel}` : ''}`
 
   if (logLabel) {
-    log.silly(log.prefix(fullLogLabel), `Generated digest for ${log.chalk.green(logLabel)}:`, hashKey);
+    log.debug(log.chalk.magenta(fullLogLabel), `Generated digest for ${log.chalk.green(logLabel)}:`, hashKey)
   }
 
   try {
-    const result = await cache.get(cachePath, hashKey);
-    const { data: cachedData } = result;
+    const result = await cache.get(cachePath, hashKey)
+    const { data: cachedData } = result
 
     if (logLabel) {
-      log.silly(log.prefix(fullLogLabel), `Cache hit for ${logLabel}`);
+      log.debug(log.chalk.magenta(fullLogLabel), `Cache hit for ${logLabel}`)
     }
 
-    return cachedData;
+    return cachedData
   } catch (err: any) {
     if (logLabel) {
       if (String(err?.message).includes('No cache entry')) {
-        log.silly(log.prefix(fullLogLabel), log.chalk.yellow('Cache miss.'));
+        log.debug(log.chalk.magenta(fullLogLabel), log.chalk.yellow('Cache miss.'))
       } else {
-        log.error(log.prefix(fullLogLabel), err);
+        log.error(log.chalk.magenta(fullLogLabel), err)
       }
     }
 
-    return;
+    return
   }
 }
-
 
 /**
  * Pass in source file contents as key. Get FaviconsResponse as value.
@@ -74,31 +68,29 @@ async function get(key: SsriData, { logLabel }: CacheOptions) {
  */
 async function put(key: SsriData, data: any, { logLabel }: CacheOptions) {
   if (!cachePath) {
-    throw new Error('Unable to find a suitable cache directory.');
+    throw new Error('Unable to find a suitable cache directory.')
   }
 
-  const hashKey = computeKey(key);
-  const fullLogLabel = `cache:put:${logLabel}`;
-  await cache.put(cachePath, hashKey, data);
+  const hashKey = computeKey(key)
+  const fullLogLabel = `cache:put:${logLabel}`
+  await cache.put(cachePath, hashKey, data)
 
   if (logLabel) {
-    log.silly(log.prefix(fullLogLabel), log.chalk.green('Put OK.'));
+    log.debug(log.chalk.magenta(fullLogLabel), log.chalk.green('Put OK.'))
   }
 }
-
 
 export async function clear() {
   if (!cachePath) {
-    throw new Error('Unable to find a suitable cache directory.');
+    throw new Error('Unable to find a suitable cache directory.')
   }
 
-  await cache.rm.all(cachePath);
+  await cache.rm.all(cachePath)
 }
-
 
 export default {
   get,
   put,
   clear,
   computeKey
-};
+}

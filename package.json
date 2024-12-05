@@ -31,27 +31,27 @@
     "help": "nr --scripts"
   },
   "peerDependencies": {
-    "vite": "^4.0.0 || ^5.0.0"
+    "vite": "^5.0.0"
   },
   "dependencies": {
-    "@darkobits/log": "^2.0.0-beta.16",
+    "@darkobits/log": "^2.0.0-beta.25",
     "@darkobits/valida": "^0.1.6",
-    "cacache": "^18.0.2",
+    "cacache": "^19.0.1",
     "fast-json-stable-stringify": "^2.1.0",
-    "favicons": "^7.1.5",
+    "favicons": "^7.2.0",
     "find-cache-dir": "~5.0.0",
     "fs-extra": "^11.2.0",
-    "parse5": "^7.1.2",
-    "ssri": "^10.0.5",
-    "ts-essentials": "^9.4.1"
+    "parse5": "^7.2.1",
+    "ssri": "^12.0.0",
+    "ts-essentials": "^10.0.3"
   },
   "devDependencies": {
-    "@darkobits/eslint-plugin": "^0.5.5",
-    "@darkobits/ts": "~0.20.7",
+    "@darkobits/eslint-plugin": "^2.1.19",
+    "@darkobits/ts": "~0.23.4",
     "@types/cacache": "^17.0.2",
-    "@types/find-cache-dir": "^3.2.1",
+    "@types/find-cache-dir": "^5.0.2",
     "@types/fs-extra": "^11.0.4",
     "@types/ssri": "^7.1.5",
-    "rollup": "^4.12.1"
+    "rollup": "^4.28.0"
   }
 }

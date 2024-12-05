@@ -1,12 +1,10 @@
-import type { FaviconOptions } from 'favicons';
-import type { DeepPartial, ValueOf, Writable } from 'ts-essentials';
-
+import type { FaviconOptions } from 'favicons'
+import type { DeepPartial, ValueOf, Writable } from 'ts-essentials'
 
 /**
  * See https://github.com/itgalaxy/favicons/blob/v7.0.2/src/config/defaults.ts
  * for a reference to `favicons` type definitions.
  */
-
 
 /**
  * List of valid platform names / icon types accepted by favicons. Should be
@@ -15,13 +13,11 @@ import type { DeepPartial, ValueOf, Writable } from 'ts-essentials';
  */
 type FaviconsIconTypes = keyof NonNullable<FaviconOptions['icons']>;
 
-
 /**
  * This should be similar to the `IconOptions` type from `favicons`, which was
  * made private in version 7.0.0. All options here are optional and writable.
  */
 type FaviconsIconOptions = Writable<Partial<Exclude<ValueOf<NonNullable<FaviconOptions['icons']>>, Array<string> | boolean>>>;
-
 
 /**
  * Options accepted by this plugin.
@@ -33,14 +29,14 @@ export interface FaviconsPluginOptions extends DeepPartial<FaviconOptions> {
    *
    * @default `true`
    */
-  inject?: boolean;
+  inject?: boolean
 
   /**
    * Whether to cache generated assets for faster subsequent builds.
    *
    * @default `true`
    */
-  cache?: boolean;
+  cache?: boolean
 
   /**
    * Options for rendering supported icon types. Keys should be supported icon
@@ -52,11 +48,10 @@ export interface FaviconsPluginOptions extends DeepPartial<FaviconOptions> {
       /**
       * Source image to use for this icon type.
       */
-      source: string;
+      source: string
     };
-  };
+  }
 }
-
 
 /**
  * Object used to describe a file emitted to a Vite compilation.
@@ -65,68 +60,64 @@ export interface EmittedViteFile {
   /**
    * ID assigned to the emitted file by Vite.
    */
-  id: string;
+  id: string
 
   /**
    * Original file name.
    */
-  name: string;
+  name: string
 
   /**
    * Name that will be used for the file in the compilation.
    */
-  resolvedName: string;
+  resolvedName: string
 }
-
 
 export interface JobConfig {
-  source: string;
-  iconType: keyof FaviconOptions['icons'];
-  config: FaviconOptions['icons'][this['iconType']];
+  source: string
+  iconType: keyof FaviconOptions['icons']
+  config: FaviconOptions['icons'][this['iconType']]
 }
-
 
 export interface AndroidManifest {
-  name: string;
-  short_name: string;
-  description: string;
-  dir: string;
-  lang: string;
-  display: string;
-  orientation: string;
-  start_url: string;
-  background_color: string;
-  theme_color: string;
+  name: string
+  short_name: string
+  description: string
+  dir: string
+  lang: string
+  display: string
+  orientation: string
+  start_url: string
+  background_color: string
+  theme_color: string
   icons: Array<{
-    src: string;
-    sizes: string;
-    type: string;
-  }>;
+    src: string
+    sizes: string
+    type: string
+  }>
 }
-
 
 export interface FirefoxManifest {
-  version: string;
-  name: string;
-  description: string;
-  icons: Record<string, string>;
+  version: string
+  name: string
+  description: string
+  icons: Record<string, string>
   developer: {
-    name: string;
-    url: string;
-  };
+    name: string
+    url: string
+  }
 }
-
 
 /**
  * Copied from parse5 because they don't include it in their ESM export map.
  */
 export interface Attribute {
   /** The name of the attribute. */
-  name: string;
+  name: string
   /** The namespace of the attribute. */
-  namespace?: string;
+  namespace?: string
   /** The namespace-related prefix of the attribute. */
-  prefix?: string;
+  prefix?: string
   /** The value of the attribute. */
-  value: string;
+  value: string
 }

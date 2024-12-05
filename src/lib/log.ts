@@ -1,3 +1,3 @@
-import LogFactory from '@darkobits/log';
+import { createLogger } from '@darkobits/log'
 
-export default LogFactory({ heading: 'favicons-plugin' });
+export default createLogger({ heading: 'favicons-plugin' })

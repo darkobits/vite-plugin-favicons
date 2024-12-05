@@ -1,19 +1,19 @@
-import path from 'path';
+import path from 'path'
 
-import stringify from 'fast-json-stable-stringify';
+import stringify from 'fast-json-stable-stringify'
 import favicons, {
   type FaviconFile,
   type FaviconHtmlElement,
   type FaviconImage,
   type FaviconOptions,
   type FaviconResponse
-} from 'favicons';
-import fs from 'fs-extra';
-import { parseFragment } from 'parse5';
+} from 'favicons'
+import fs from 'fs-extra'
+import { parseFragment } from 'parse5'
 
-import { DEFAULT_ICON_OPTIONS } from 'etc/constants';
-import cache from 'lib/cache';
-import log from 'lib/log';
+import { DEFAULT_ICON_OPTIONS } from 'etc/constants'
+import cache from 'lib/cache'
+import log from 'lib/log'
 
 import type {
   Attribute,
@@ -22,10 +22,9 @@ import type {
   FaviconsPluginOptions,
   FirefoxManifest,
   JobConfig
-} from 'etc/types';
-import type { DeepPartial } from 'ts-essentials';
-import type { HtmlTagDescriptor } from 'vite';
-
+} from 'etc/types'
+import type { DeepPartial } from 'ts-essentials'
+import type { HtmlTagDescriptor } from 'vite'
 
 /**
  * @private
@@ -40,9 +39,8 @@ async function generateCacheKeyForJob(jobConfig: JobConfig) {
   return cache.computeKey(stringify({
     ...jobConfig,
     source: await fs.readFile(jobConfig.source)
-  }));
+  }))
 }
-
 
 /**
  * @private
@@ -53,18 +51,17 @@ async function generateCacheKeyForJob(jobConfig: JobConfig) {
  */
 function mapOptsToJobs(opts: FaviconsPluginOptions) {
   return Object.entries(opts.icons).reduce<Array<JobConfig>>((jobs, [iconType, sourceAndIconOptions]) => {
-    const { source, ...iconOptions } = sourceAndIconOptions;
+    const { source, ...iconOptions } = sourceAndIconOptions
 
     // Create a new 'icons' configuration key that contains only the current
     // icon type.
-    const icons = { ...DEFAULT_ICON_OPTIONS, [iconType]: iconOptions };
-    const config: DeepPartial<FaviconOptions> = { ...opts, icons };
-    const job = { source, iconType, config } as JobConfig;
+    const icons = { ...DEFAULT_ICON_OPTIONS, [iconType]: iconOptions }
+    const config: DeepPartial<FaviconOptions> = { ...opts, icons }
+    const job = { source, iconType, config } as JobConfig
 
-    return [...jobs, job];
-  }, []);
+    return [...jobs, job]
+  }, [])
 }
-
 
 /**
  * @private
@@ -75,25 +72,24 @@ function mapOptsToJobs(opts: FaviconsPluginOptions) {
 function reduceResponses(responses: Array<FaviconResponse>) {
   return responses.reduce<FaviconResponse>((response, curResponse) => {
     for (const file of curResponse.files) {
-      response.files.push(file);
+      response.files.push(file)
     }
 
     for (const image of curResponse.images) {
-      response.images.push(image);
+      response.images.push(image)
     }
 
     for (const html of curResponse.html) {
-      response.html.push(html);
+      response.html.push(html)
     }
 
-    return response;
+    return response
   }, {
     files: [],
     images: [],
     html: []
-  });
+  })
 }
-
 
 /**
  * @private
@@ -109,39 +105,38 @@ async function cacheResponse(cacheKey: string, response: FaviconResponse, label?
     images: [] as Array<Omit<FaviconImage, 'contents'>>,
     files: [] as Array<Omit<Partial<FaviconFile>, 'contents'>>,
     html: [] as Array<FaviconHtmlElement>
-  };
+  }
 
   // Write images to cache as individual entities and add all other metadata to
   // the new response.
   const imagesPromise = Promise.all(response.images.map(async image => {
-    const { contents, ...meta } = image;
-    const key = `${cacheKey}/images/${meta.name}`;
-    serializableResponse.images.push(meta);
-    log.verbose(label && log.prefix(label), `Caching ${log.chalk.green(meta.name)}.`);
-    await cache.put(key, contents, { logLabel: meta.name });
-  }));
+    const { contents, ...meta } = image
+    const key = `${cacheKey}/images/${meta.name}`
+    serializableResponse.images.push(meta)
+    log.verbose(label && log.chalk.magenta(label), `Caching ${log.chalk.green(meta.name)}.`)
+    await cache.put(key, contents, { logLabel: meta.name })
+  }))
 
   // Write files to cache as individual entities and add all other metadata to
   // the new response.
   const filesPromise = Promise.all(response.files.map(async file => {
-    const { contents, ...meta } = file;
-    const key = `${cacheKey}/files/${meta.name}`;
-    serializableResponse.files.push(meta);
-    log.verbose(label && log.prefix(label), `Caching ${log.chalk.green(meta.name)}.`);
-    await cache.put(key, contents, { logLabel: meta.name });
-  }));
+    const { contents, ...meta } = file
+    const key = `${cacheKey}/files/${meta.name}`
+    serializableResponse.files.push(meta)
+    log.verbose(label && log.chalk.magenta(label), `Caching ${log.chalk.green(meta.name)}.`)
+    await cache.put(key, contents, { logLabel: meta.name })
+  }))
 
   // Add all HTML to the new response.
   for (const html of response.html) {
-    serializableResponse.html.push(html);
+    serializableResponse.html.push(html)
   }
 
   // Serialize response and write it to cache.
-  const serializedResponse = JSON.stringify(serializableResponse);
-  const responsePromise = cache.put(cacheKey, serializedResponse, { logLabel: label ?? '' });
-  await Promise.all([filesPromise, imagesPromise, responsePromise]);
+  const serializedResponse = JSON.stringify(serializableResponse)
+  const responsePromise = cache.put(cacheKey, serializedResponse, { logLabel: label ?? '' })
+  await Promise.all([filesPromise, imagesPromise, responsePromise])
 }
-
 
 /**
  * @private
@@ -153,45 +148,44 @@ async function cacheResponse(cacheKey: string, response: FaviconResponse, label?
  * Buffers, we have to manually merge binary data into a single response.
  */
 async function getCachedResponse(cacheKey: string, label?: string) {
-  const serializedResponse = await cache.get(cacheKey, { logLabel: label ?? '' });
-  if (!serializedResponse) return;
+  const serializedResponse = await cache.get(cacheKey, { logLabel: label ?? '' })
+  if (!serializedResponse) return
 
-  const response: FaviconResponse = JSON.parse(serializedResponse.toString('utf8'));
+  const response: FaviconResponse = JSON.parse(serializedResponse.toString('utf8'))
 
   // Read all images from cache.
   const imagesPromise = Promise.all(response.images.map(async image => {
-    const key = `${cacheKey}/images/${image.name}`;
-    const contents = await cache.get(key, { logLabel: image.name });
+    const key = `${cacheKey}/images/${image.name}`
+    const contents = await cache.get(key, { logLabel: image.name })
 
     if (!contents) {
-      throw new Error(`Expected cached contents for "${key}"`);
+      throw new Error(`Expected cached contents for "${key}"`)
     }
 
-    return { ...image, contents };
-  }));
+    return { ...image, contents }
+  }))
 
   // Read all files from cache.
   const filesPromise = Promise.all(response.files.map(async file => {
-    const key = `${cacheKey}/files/${file.name}`;
-    const contents = await cache.get(key, { logLabel: file.name });
+    const key = `${cacheKey}/files/${file.name}`
+    const contents = await cache.get(key, { logLabel: file.name })
 
     if (!contents) {
-      throw new Error(`Expected cached contents for "${key}"`);
+      throw new Error(`Expected cached contents for "${key}"`)
     }
 
-    return { ...file, contents: contents.toString('utf8') };
-  }));
+    return { ...file, contents: contents.toString('utf8') }
+  }))
 
   // Wait for all assets to be read from cache.
-  const [files, images] = await Promise.all([filesPromise, imagesPromise]);
+  const [files, images] = await Promise.all([filesPromise, imagesPromise])
 
   return {
     ...response,
     files,
     images
-  };
+  }
 }
-
 
 /**
  * Provided a list of EmittedFile descriptors and a search query, returns the
@@ -200,11 +194,10 @@ async function getCachedResponse(cacheKey: string, label?: string) {
 export function findEmittedFile(emittedFiles: Array<EmittedViteFile>, searchFilePath: string) {
   // Extract the name (sans extension) generated by `favicons` for the search
   // file. For example: 'apple-touch-startup-image.png'
-  const faviconsFileName = path.parse(searchFilePath).name;
+  const faviconsFileName = path.parse(searchFilePath).name
 
-  return emittedFiles.find(file => faviconsFileName === path.parse(file.name).name);
+  return emittedFiles.find(file => faviconsFileName === path.parse(file.name).name)
 }
-
 
 /**
  * Provided a FaviconsPluginOptions object, generates assets and returns a
@@ -213,43 +206,42 @@ export function findEmittedFile(emittedFiles: Array<EmittedViteFile>, searchFile
 export async function generateFavicons(opts: FaviconsPluginOptions) {
   // Because favicons only allows a single source asset per invocation, map
   // incoming configuration into a list of jobs we will need to run.
-  const jobConfigs = mapOptsToJobs(opts);
+  const jobConfigs = mapOptsToJobs(opts)
 
   const jobs = jobConfigs.map(async jobConfig => {
-    const { source, iconType, config } = jobConfig;
+    const { source, iconType, config } = jobConfig
     // N.B. Favicons modifies the `config` object in-place, so we need to
     // generate a key now to ensure that our cache get/put functions use the
     // same one.
-    const cacheKeyForJob = await generateCacheKeyForJob(jobConfig);
+    const cacheKeyForJob = await generateCacheKeyForJob(jobConfig)
 
-    const sourceFileName = path.basename(source);
+    const sourceFileName = path.basename(source)
 
     if (opts.cache) {
       // If we have a cached response for this source asset, return it.
-      const cachedResponse = await getCachedResponse(cacheKeyForJob, iconType);
+      const cachedResponse = await getCachedResponse(cacheKeyForJob, iconType)
 
       if (cachedResponse) {
-        log.verbose(`Using cached ${log.chalk.bold(iconType)} assets from source ${log.chalk.green(sourceFileName)}.`);
-        return cachedResponse;
+        log.verbose(`Using cached ${log.chalk.bold(iconType)} assets from source ${log.chalk.green(sourceFileName)}.`)
+        return cachedResponse
       }
     }
 
-    const response = await favicons(source, config as FaviconOptions);
+    const response = await favicons(source, config as FaviconOptions)
 
     if (opts.cache) {
       // Return the response immediately without awaiting the cache write.
       void cacheResponse(cacheKeyForJob, response, iconType).then(() => {
-        log.verbose(`Cached rendered ${log.chalk.bold(iconType)} assets from source ${log.chalk.green(sourceFileName)}.`);
-      });
+        log.verbose(`Cached rendered ${log.chalk.bold(iconType)} assets from source ${log.chalk.green(sourceFileName)}.`)
+      })
     }
 
-    return response;
-  });
+    return response
+  })
 
   // Merge each response into a single `FaviconsResponse`.
-  return reduceResponses(await Promise.all(jobs));
+  return reduceResponses(await Promise.all(jobs))
 }
-
 
 /**
  * Provided an array of EmittedFile objects and an array of HTML strings
@@ -262,13 +254,13 @@ export async function generateFavicons(opts: FaviconsPluginOptions) {
  */
 export function parseHtml(emittedFiles: Array<EmittedViteFile>, fragments: Array<string>, base = '/') {
   return fragments.flatMap(fragment => {
-    const parsedFragment = parseFragment(fragment);
+    const parsedFragment = parseFragment(fragment)
 
     // Map over each child node in the fragment
     return parsedFragment.childNodes.filter(childNode => {
       // Remove nodes that are not of type `Element` by using duck typing to
       // to check for the `attrs` property.
-      return Reflect.has(childNode, 'attrs');
+      return Reflect.has(childNode, 'attrs')
     }).map(childNode => {
       // Then map over each of its attributes
       const mappedAttrs = (childNode as any).attrs.map((attr: Attribute) => {
@@ -276,32 +268,31 @@ export function parseHtml(emittedFiles: Array<EmittedViteFile>, fragments: Array
         if (attr.name === 'href') {
           // Locate the file descriptor for this element by matching our
           // href to the file's resolved name.
-          const correspondingFile = findEmittedFile(emittedFiles, attr.value);
+          const correspondingFile = findEmittedFile(emittedFiles, attr.value)
 
           // Finally, update the href attribute from the original file name
           // to the resolved file name.
           // we should respect base options defined in vite.config
           if (correspondingFile) {
-            attr.value = `${base}${correspondingFile.resolvedName}`;
+            attr.value = `${base}${correspondingFile.resolvedName}`
           } else {
-            throw new Error(`Unable to find a corresponding file for href: ${attr.value}`);
+            throw new Error(`Unable to find a corresponding file for href: ${attr.value}`)
           }
         }
 
         // Return an entry tuple for this attribute name/value pair.
-        return [attr.name, attr.value];
-      });
+        return [attr.name, attr.value]
+      })
 
       return {
         tag: childNode.nodeName,
         attrs: Object.fromEntries(mappedAttrs),
         injectTo: 'head'
-      } as HtmlTagDescriptor;
+      } as HtmlTagDescriptor
 
-    }).filter(Boolean);
-  });
+    }).filter(Boolean)
+  })
 }
-
 
 /**
  * Provided a list of EmittedFile objects from Vite and an Android or Firefox
@@ -309,31 +300,31 @@ export function parseHtml(emittedFiles: Array<EmittedViteFile>, fragments: Array
  * generated for the file by Vite.
  */
 export function updateManifest(emittedImages: Array<EmittedViteFile>, manifestContents: string) {
-  const parsedManifest: AndroidManifest | FirefoxManifest = JSON.parse(manifestContents);
+  const parsedManifest: AndroidManifest | FirefoxManifest = JSON.parse(manifestContents)
 
   // Handles Android's manifest format.
   if (Array.isArray(parsedManifest.icons)) {
     parsedManifest.icons = parsedManifest.icons.map(iconDescriptor => {
-      const correspondingFile = findEmittedFile(emittedImages, iconDescriptor.src);
+      const correspondingFile = findEmittedFile(emittedImages, iconDescriptor.src)
 
       if (!correspondingFile) {
-        throw new Error(`Unable to find a corresponding emitted file for manifest entry: ${iconDescriptor.src}`);
+        throw new Error(`Unable to find a corresponding emitted file for manifest entry: ${iconDescriptor.src}`)
       }
 
-      return { ...iconDescriptor, src: `/${correspondingFile.resolvedName}` };
-    });
+      return { ...iconDescriptor, src: `/${correspondingFile.resolvedName}` }
+    })
   // Handles Firefox's manifest format.
   } else if (Object.keys(parsedManifest.icons).length > 0) {
     parsedManifest.icons = Object.fromEntries(Object.entries(parsedManifest.icons).map(([size, src]) => {
-      const correspondingFile = findEmittedFile(emittedImages, src);
+      const correspondingFile = findEmittedFile(emittedImages, src)
 
       if (!correspondingFile) {
-        throw new Error(`Unable to find a corresponding emitted file for manifest entry: ${src}`);
+        throw new Error(`Unable to find a corresponding emitted file for manifest entry: ${src}`)
       }
 
-      return [size, `/${correspondingFile.resolvedName}`];
-    }));
+      return [size, `/${correspondingFile.resolvedName}`]
+    }))
   }
 
-  return JSON.stringify(parsedManifest);
+  return JSON.stringify(parsedManifest)
 }

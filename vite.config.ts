@@ -1,3 +1,3 @@
-import { vite } from '@darkobits/ts';
+import { vite } from '@darkobits/ts'
 
-export default vite.library();
+export default vite.node()

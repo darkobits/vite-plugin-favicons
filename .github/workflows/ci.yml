@@ -15,25 +15,25 @@ concurrency:
   # which commit caused the failure.
   cancel-in-progress: ${{ github.ref_name != github.event.repository.default_branch }}
 jobs:
-  ci:
-    name: CI
+  build-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
     # Skip building tags; an identical job for the commit to which the tag
     # points will be triggered anyway.
     if: github.ref_type != 'tag'
-    runs-on: ubuntu-latest
     steps:
-      - name: Clone Repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup Node
+      - name: Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: lts/*
           cache: npm
-      - name: Install Dependencies
+      - name: Prepare
         run: npm clean-install
-      - name: Build Project
+      - name: Build
         run: npx nr build
-      - name: Run Tests
+      - name: Test
         run: npx nr test

@@ -1,11 +1,9 @@
-import type { FaviconsPluginOptions } from 'etc/types';
-
+import type { FaviconsPluginOptions } from 'etc/types'
 
 export const DEFAULT_OPTIONS: Partial<FaviconsPluginOptions> = {
   inject: true,
   cache: true
-};
-
+}
 
 /**
  * By default, `favicons` renders assets for each icon type and config is used
@@ -21,4 +19,4 @@ export const DEFAULT_ICON_OPTIONS = {
   favicons: false,
   windows: false,
   yandex: false
-};
+}
